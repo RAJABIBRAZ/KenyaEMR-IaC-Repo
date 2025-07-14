@@ -1,0 +1,15 @@
+tenant:
+  name: ""
+  backendImage: ""
+  frontendImage: ""
+  dbHost: ""
+  dbSchema: ""
+  dbUser: ""
+  dbPassword: ""
+
+ingress:
+  enabled: true
+  host: ""
+
+deployment:
+  forceRedeployTimestamp: ""

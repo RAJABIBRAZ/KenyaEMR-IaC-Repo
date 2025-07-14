@@ -1,0 +1,20 @@
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+terraform.tfvars
+*.tfplan
+.terraform.lock.hcl
+
+# Sensitive
+secrets.auto.tfvars
+crash.log
+override.tf
+override.tf.json
+
+# OS
+.DS_Store
+
+
+# Keep the Helm chart!
+!charts/**

@@ -1,0 +1,30 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ .Release.Name }}-kenyaemr-ingress
+  labels:
+    app.kubernetes.io/name: {{ .Release.Name }}-kenyaemr
+    app.kubernetes.io/instance: {{ .Release.Name }}
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: {{ .Values.tenant.name }}.local
+      http:
+        paths:
+          - path: /()(.*)
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: {{ .Values.tenant.name }}-svc
+                port:
+                  number: 80
+          - path: /openmrs(/|$)(.*)
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: {{ .Values.tenant.name }}-svc
+                port:
+                  number: 8080
+

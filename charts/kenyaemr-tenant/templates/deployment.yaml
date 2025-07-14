@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.tenant.name }}-app
+  labels:
+    app: {{ .Values.tenant.name }}
+  annotations:
+    redeploy-timestamp: "{{ .Values.deployment.forceRedeployTimestamp | default (now | quote) }}"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .Values.tenant.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.tenant.name }}
+    spec:
+      containers:
+        - name: backend
+          image: {{ .Values.tenant.backendImage }}
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+          env:
+            - name: OMRS_CONFIG_CONNECTION_SERVER
+              value: {{ .Values.tenant.dbHost }}
+            - name: OMRS_CONFIG_CONNECTION_DATABASE
+              value: {{ .Values.tenant.dbSchema }}
+            - name: OMRS_CONFIG_CONNECTION_USERNAME
+              value: {{ .Values.tenant.dbUser }}
+            - name: OMRS_CONFIG_CONNECTION_PASSWORD
+              value: {{ .Values.tenant.dbPassword }}
+
+        - name: frontend
+          image: {{ .Values.tenant.frontendImage }}
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
+          env:
+            - name: SPA_PATH
+              value: /openmrs/spa
+            - name: API_URL
+              value: /openmrs
