@@ -6,6 +6,7 @@ tenant:
   dbSchema: ""
   dbUser: ""
   dbPassword: ""
+  dbRestoreImageTag: "v2.0"  
 
 ingress:
   enabled: true
@@ -13,3 +14,6 @@ ingress:
 
 deployment:
   forceRedeployTimestamp: ""
+
+dbRestore:
+  enabled: false

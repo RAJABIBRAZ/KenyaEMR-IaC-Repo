@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.tenant.name }}-frontend
+  namespace: {{ .Release.Namespace }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .Values.tenant.name }}-frontend
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.tenant.name }}-frontend
+    spec:
+      containers:
+        - name: frontend
+          image: {{ .Values.tenant.frontendImage }}
+          env:
+            - name: SPA_PATH
+              value: /openmrs/spa
+            - name: API_URL
+              value: /openmrs
+            - name: SPA_DEFAULT_LOCALE
+              value: en

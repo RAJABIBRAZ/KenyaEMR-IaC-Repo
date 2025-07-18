@@ -9,7 +9,7 @@ resource "helm_release" "kenyaemr" {
   namespace  = kubernetes_namespace.tenant.metadata[0].name
   chart      = var.chart_path
   version    = "0.1.0"
-  timeout    = 600
+  timeout    = 7200
 
   set = [
     {

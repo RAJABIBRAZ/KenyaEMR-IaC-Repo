@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.tenant.name }}-backend
+  namespace: {{ .Release.Namespace }}
+spec:
+  replicas: 1
+  revisionHistoryLimit: 0
+  selector:
+    matchLabels:
+      app: {{ .Values.tenant.name }}-backend
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.tenant.name }}-backend
+    spec:
+      containers:
+        - name: backend
+          image: {{ .Values.tenant.backendImage }}
+          imagePullPolicy: IfNotPresent
+          volumeMounts:
+            - name: runtime-config
+              mountPath: /openmrs/openmrs-runtime.properties
+              subPath: runtime.properties
+          
+          env:
+            - name: OMRS_CONFIG_CONNECTION_SERVER
+              value: {{ .Values.tenant.dbHost }}
+            - name: OMRS_CONFIG_CONNECTION_DATABASE
+              value: {{ .Values.tenant.dbSchema }}
+            - name: OMRS_CONFIG_CONNECTION_USERNAME
+              value: {{ .Values.tenant.dbUser }}
+            - name: OMRS_CONFIG_CONNECTION_PASSWORD
+              value: {{ .Values.tenant.dbPassword }}
+            - name: OMRS_CONFIG_MODULE_WEB_ADMIN
+              value: "true"
+            - name: OMRS_CONFIG_AUTO_UPDATE_DATABASE
+              value: "true"
+            - name: OMRS_CONFIG_CREATE_TABLES
+              value: "false"
+      volumes:
+        - name: runtime-config
+          configMap:
+            name: {{ .Values.tenant.name }}-runtime-config

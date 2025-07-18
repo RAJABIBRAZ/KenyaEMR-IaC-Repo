@@ -6,25 +6,24 @@ metadata:
     app.kubernetes.io/name: {{ .Release.Name }}-kenyaemr
     app.kubernetes.io/instance: {{ .Release.Name }}
   annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/use-regex: "true"
 spec:
   ingressClassName: nginx
   rules:
     - host: {{ .Values.tenant.name }}.local
       http:
         paths:
-          - path: /()(.*)
+          - path: /openmrs/spa(/|$)(.*)
             pathType: ImplementationSpecific
             backend:
               service:
-                name: {{ .Values.tenant.name }}-svc
+                name: {{ .Values.tenant.name }}-frontend
                 port:
                   number: 80
           - path: /openmrs(/|$)(.*)
             pathType: ImplementationSpecific
             backend:
               service:
-                name: {{ .Values.tenant.name }}-svc
+                name: {{ .Values.tenant.name }}-backend
                 port:
                   number: 8080
-
