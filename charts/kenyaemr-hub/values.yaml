@@ -1,0 +1,17 @@
+hub:
+  enabled: true
+  domain: hub.hmislocal.org
+  knownTenants:
+    - name: bethelhospital
+      branding: Bethel Hospital
+    - name: kadiscogh
+      branding: Kadisco GH
+    - name: mbagathicrh
+      branding: Mbagathi CRH
+    - name: kayolesch
+      branding: Kayole SCH
+    - name: bethzathagh
+      branding: Bethzatha GH
+
+deployment:
+  forceRedeployTimestamp: "2025-07-30T19:45:00Z"

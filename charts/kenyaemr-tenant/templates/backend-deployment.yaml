@@ -17,7 +17,7 @@ spec:
       containers:
         - name: backend
           image: {{ .Values.tenant.backendImage }}
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           volumeMounts:
             - name: runtime-config
               mountPath: /openmrs/openmrs-runtime.properties

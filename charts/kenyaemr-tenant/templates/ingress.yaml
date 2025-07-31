@@ -7,10 +7,15 @@ metadata:
     app.kubernetes.io/instance: {{ .Release.Name }}
   annotations:
     nginx.ingress.kubernetes.io/use-regex: "true"
+    cert-manager.io/cluster-issuer: letsencrypt-prod
 spec:
   ingressClassName: nginx
+  tls:
+    - hosts:
+        - {{ .Values.tenant.name }}.hmislocal.org
+      secretName: {{ .Values.tenant.name }}-tls
   rules:
-    - host: {{ .Values.tenant.name }}.local
+    - host: {{ .Values.tenant.name }}.hmislocal.org
       http:
         paths:
           - path: /openmrs/spa(/|$)(.*)

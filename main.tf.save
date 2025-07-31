@@ -20,7 +20,7 @@ module "bethzatha" {
   db_schema      = "openmrs_bethzathagh"
   db_host        = "mysql.default.svc.cluster.local"
   db_user        = "mbagathi_user"
-  db_password    = "mbagathi_user"
+  db_password    = ""
   backend_image  = "hakeemraj/kenyaemr-backend:latest"
   frontend_image = "hakeemraj/kenyaemr-frontend:latest"
 }
@@ -80,10 +80,3 @@ module "kayoleemr" {
 
 
 # Add more tenants here...
-
-
-
-module "hub" {
-  source     = "./modules/kenyaemr-hub"
-  chart_path = "${path.module}/charts/kenyaemr-hub"
-}

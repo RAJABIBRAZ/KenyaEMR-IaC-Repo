@@ -16,10 +16,11 @@ spec:
       containers:
         - name: frontend
           image: {{ .Values.tenant.frontendImage }}
+          imagePullPolicy: Always
           env:
             - name: SPA_PATH
               value: /openmrs/spa
             - name: API_URL
               value: /openmrs
             - name: SPA_DEFAULT_LOCALE
-              value: en
+              value: am
